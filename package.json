@@ -1,6 +1,6 @@
 {
   "name": "postcss-css-grid",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "PostCSS plugin to format CSS Grid",
   "keywords": [
     "postcss",
