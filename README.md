@@ -2,19 +2,33 @@
 
 [PostCSS] plugin to format CSS Grid.
 
-[PostCSS]: https://github.com/postcss/postcss
+[postcss]: https://github.com/postcss/postcss
+
+Input:
 
 ```css
-.foo {
-  /* Input example */
+.aacc {
+  grid-template-areas: "header header header"
+                       "aside nav nav nav"
+                       "aside article article"
+                       "aside main main"
+                       "footer footer footer";
 }
 ```
 
+Output:
+
 ```css
-.foo {
-  /* Output example */
+.aacc {
+  grid-template-areas:
+    "header header  header "
+    "aside  nav     nav    "
+    "aside  article article"
+    "aside  main    main   "
+    "footer footer  footer ";
 }
 ```
+
 
 ## Usage
 
@@ -24,9 +38,16 @@
 npm install --save-dev postcss postcss-css-grid
 ```
 
-**Step 2:** Check you project for existed PostCSS config: `postcss.config.js`
-in the project root, `"postcss"` section in `package.json`
-or `postcss` in bundle config.
+**Step 2:** Check your project for an existing PostCSS config: `postcss.config.js`
+in the project root, `"postcss"` key in the `package.json`
+or `postcss` in the bundle config.
+
+If you do not use PostCSS, add it according to [official docs]
+and set this plugin in settings.
+
+**Step 2:** Check your project for an existing PostCSS config: `postcss.config.js`
+in the project root, `"postcss"` key in the `package.json`
+or `postcss` in the bundle config.
 
 If you do not use PostCSS, add it according to [official docs]
 and set this plugin in settings.
@@ -43,3 +64,31 @@ module.exports = {
 ```
 
 [official docs]: https://github.com/postcss/postcss#usage
+
+## Options (Optional)
+
+While this plugin is intentionally opinionated, you can customize the formatting by providing any of the following options:
+
+```js
+module.exports = {
+  plugins: [
+    require("postcss-css-grid")({
+      /**
+       * Use single quotes instead of double quotes.
+       * @default false
+       */
+      singleQuote: false,
+      /**
+       * Use tabs instead of spaces.
+       * @default false
+       */
+      useTabs: false,
+      /**
+       * Number of spaces to use for indentation.
+       * @default 2
+       */
+      tabWidth: 2,
+    }),
+  ],
+};
+```

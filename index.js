@@ -1,31 +1,33 @@
+const { getGridTemplateAreas } = require("format-css-grid");
+
 /**
  * @type {import('postcss').PluginCreator}
  */
-module.exports = (opts = {}) => {
-  // Work with options here
-
+module.exports = (options = {}) => {
   return {
-    postcssPlugin: 'postcss-css-grid',
-    /*
-    Root (root, postcss) {
-      // Transform CSS AST here
-    }
-    */
+    postcssPlugin: "postcss-css-grid",
+    OnceExit: (root) => {
+      root.walkDecls("grid-template-areas", (decl) => {
+        const { between, value: { raw } = {} } = decl.raws;
 
-    /*
-    Declaration (decl, postcss) {
-      // The faster way to find Declaration node
-    }
-    */
+        const hasLeadingComment = between.includes("/*");
+        const rawValue = hasLeadingComment ? between + raw : raw;
 
-    /*
-    Declaration: {
-      color: (decl, postcss) {
-        // The fastest way find Declaration node if you know property name
-      }
-    }
-    */
-  }
-}
+        const gridTemplateAreas = getGridTemplateAreas({
+          /* Use `rawValue` if `grid-template-areas` has comments */
+          value: raw ? rawValue : decl.value,
+          singleQuote: options.singleQuote,
+          startColumn: decl.source.start.column,
+          useTabs: options.useTabs,
+          tabWidth: options.tabWidth,
+        });
 
-module.exports.postcss = true
+        if (between.includes(":")) decl.raws.between = ":";
+
+        decl.value = gridTemplateAreas;
+      });
+    },
+  };
+};
+
+module.exports.postcss = true;

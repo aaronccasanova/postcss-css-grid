@@ -2,7 +2,13 @@
   "name": "postcss-css-grid",
   "version": "0.0.0",
   "description": "PostCSS plugin to format CSS Grid",
-  "keywords": ["postcss", "css", "postcss-plugin", "postcss-css-grid"],
+  "keywords": [
+    "postcss",
+    "postcss-plugin",
+    "postcss-css-grid",
+    "css",
+    "css-grid"
+  ],
   "scripts": {
     "test": "jest --coverage && eslint ."
   },
@@ -14,6 +20,9 @@
   },
   "peerDependencies": {
     "postcss": "^8.3.0"
+  },
+  "dependencies": {
+    "format-css-grid": "^0.1.0"
   },
   "devDependencies": {
     "clean-publish": "^3.4.2",
@@ -30,7 +39,10 @@
       "node": true,
       "es6": true
     },
-    "extends": ["eslint:recommended", "plugin:jest/recommended"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:jest/recommended"
+    ],
     "rules": {
       "jest/expect-expect": "off"
     }
